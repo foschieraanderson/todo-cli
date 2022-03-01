@@ -11,11 +11,15 @@ def create_table():
 
 create_table()
 
-def insert_tag(tag: Tag):
+def create(tag: Tag):
     with conn:
         cursor.execute('INSERT INTO tags VALUES (NULL, :name, :color)', {
             'name': tag.name, 'color': tag.color
          })
+
+def delete(key: int):
+    with conn:
+        cursor.execute('DELETE FROM tags WHERE id=:key', {'key': key})
 
 def list_all() -> List[Tag]:
     cursor.execute('SELECT * FROM tags')

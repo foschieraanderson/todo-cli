@@ -5,7 +5,7 @@ from enum import Enum
 from typing import List
 
 from models.tag_model import Tag
-from repositories.tag_repository import insert_tag, list_all
+from repositories.tag_repository import create, delete, list_all
 
 console = Console()
 app = typer.Typer()
@@ -21,15 +21,20 @@ class ColorsTag(str, Enum):
 
 @app.command(short_help='Add an tag')
 def add(name: str, color: ColorsTag = ColorsTag.white):
-    console.print(f'[{color}]{name}[/{color}]')
     tag = Tag(id=None, name=name, color=color)
-    insert_tag(tag)
+    create(tag)
+    show()
+
+@app.command(short_help='Remove an tag')
+def rm(key: int):
+    console.print("KEY: ", key)
+    delete(key=key)
     show()
 
 @app.command(short_help='List all tags')
 def show():
     tags = list_all()
-    table = Table(title='Tags', title_justify='center', show_header=True, header_style='bold blue')
+    table = Table(title='My Tags', title_justify='center', show_header=True, header_style='bold blue')
     table.add_column('#', style='dim', width=4)
     table.add_column('Tag', min_width=20, justify='center')
     table.add_column('Color', min_width=10, justify='center')
