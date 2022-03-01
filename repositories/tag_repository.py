@@ -5,8 +5,8 @@ from models.tag_model import Tag
 def create_table():
     cursor.execute("""CREATE TABLE IF NOT EXISTS tags (
         id integer primary key autoincrement,
-        name text not null,
-        color text not null unique
+        name text not null unique,
+        color text not null 
         )""")
 
 create_table()
@@ -35,6 +35,11 @@ def update(key: int, name: str, color: str):
             cursor.execute('UPDATE tags SET color = :color WHERE id = :key', {
                 'key':key, 'color': color
             })
+
+def clear_all():
+    with conn:
+        cursor.execute('DROP TABLE tags')
+        create_table()
 
 def list_all() -> List[Tag]:
     cursor.execute('SELECT * FROM tags')

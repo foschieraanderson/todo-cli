@@ -5,7 +5,7 @@ from rich.prompt import Confirm
 from enum import Enum
 
 from models.tag_model import Tag
-from repositories.tag_repository import create, delete, list_all, update
+from repositories.tag_repository import clear_all, create, delete, list_all, update
 
 from time import sleep
 
@@ -23,7 +23,7 @@ class ColorsTag(str, Enum):
 
 @app.command(short_help='Add an tag')
 def add(name: str, color: ColorsTag = ColorsTag.white):
-    with console.status(f'[green]:floppy_disk: Adding [bold]tag {name}[/]...[/]'):
+    with console.status(f'[green] :floppy_disk: Adding [bold]tag {name}[/]...[/]'):
         try:
             tag = Tag(id=None, name=name, color=color)
             create(tag)
@@ -33,7 +33,7 @@ def add(name: str, color: ColorsTag = ColorsTag.white):
 
 @app.command(short_help='Remove an tag')
 def rm(key: int):
-    confirm = Confirm.ask(f'[red]:warning: Do you want to remove tag [bold]{key}[/] :question:[/]')
+    confirm = Confirm.ask(f'[red] :warning: Do you want to remove tag [bold]{key}[/] :question:[/]')
     if confirm:
         with console.status(f'[red]:wastebasket: Removing [bold]tag {key}[/]...[/]'):
             try:
@@ -45,12 +45,23 @@ def rm(key: int):
 
 @app.command(short_help='Update an tag')
 def up(key: int, name: str = None, color: ColorsTag = None):
-    with console.status(f'[cyan]:recycle: Updating [bold]tag {key}[/]...[/]'):
+    with console.status(f'[cyan] :recycle: Updating [bold]tag {key}[/]...[/]'):
         try:
             update(key=key, name=name, color=color)
             show()
         except Exception:
             console.print_exception(show_locals=True)
+
+@app.command(short_help='Remove all tags')
+def clear():
+    confirm = Confirm.ask(f'[white on red] :warning: Do you want to remove [bold]all[/] tags :question:[/]')
+    if confirm:
+        with console.status(f'[red] :wastebasket: Removing [bold]all tags[/]...[/]'):
+            try:
+                clear_all()
+                show()
+            except Exception:
+                console.print_exception(show_locals=True)
 
 @app.command(short_help='List all tags')
 def show():
