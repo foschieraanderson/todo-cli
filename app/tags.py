@@ -22,20 +22,21 @@ class ColorsTag(str, Enum):
 
 @app.command(short_help='Add an tag')
 def add(name: str, color: ColorsTag = ColorsTag.white):
-    with console.status(f'Adding [bold green]tag {name}[/]...'):
+    with console.status(f'[green]:floppy_disk: Adding [bold]tag {name}[/]...[/]'):
         tag = Tag(id=None, name=name, color=color)
         create(tag)
         show()
 
 @app.command(short_help='Remove an tag')
 def rm(key: int):
-    with console.status(f'Removing [bold red]tag {key}[/]...'):
+    with console.status(f'[red]:wastebasket: Removing [bold]tag {key}[/]...[/]'):
         delete(key=key)
         show()
 
+
 @app.command(short_help='Update an tag')
 def up(key: int, name: str = None, color: ColorsTag = None):
-    with console.status(f'Updating [bold cyan]tag {key}[/]...'):
+    with console.status(f'[cyan]:recycle: Updating [bold]tag {key}[/]...[/]'):
         update(key=key, name=name, color=color)
         show()
 
