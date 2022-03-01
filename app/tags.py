@@ -2,10 +2,10 @@ import typer
 from rich.console import Console
 from rich.table import Table
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 from models.tag_model import Tag
-from repositories.tag_repository import create, delete, list_all
+from repositories.tag_repository import create, delete, list_all, update
 
 console = Console()
 app = typer.Typer()
@@ -29,6 +29,11 @@ def add(name: str, color: ColorsTag = ColorsTag.white):
 def rm(key: int):
     console.print("KEY: ", key)
     delete(key=key)
+    show()
+
+@app.command(short_help='Update an tag')
+def up(key: int, name: str = None, color: ColorsTag = None):
+    update(key=key, name=name, color=color)
     show()
 
 @app.command(short_help='List all tags')

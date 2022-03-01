@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from configs.database import conn, cursor
 from models.tag_model import Tag
 
@@ -19,7 +19,22 @@ def create(tag: Tag):
 
 def delete(key: int):
     with conn:
-        cursor.execute('DELETE FROM tags WHERE id=:key', {'key': key})
+        cursor.execute('DELETE FROM tags WHERE id = :key', {'key': key})
+
+def update(key: int, name: str, color: str):
+    with conn:
+        if name and color:
+            cursor.execute('UPDATE tags SET name = :name, color = :color WHERE id = :key', {
+                'key':key, 'name': name, 'color': color
+            })
+        elif name:
+            cursor.execute('UPDATE tags SET name = :name WHERE id = :key', {
+                'key':key, 'name': name
+            })
+        elif color:
+            cursor.execute('UPDATE tags SET color = :color WHERE id = :key', {
+                'key':key, 'color': color
+            })
 
 def list_all() -> List[Tag]:
     cursor.execute('SELECT * FROM tags')
