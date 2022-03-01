@@ -1,6 +1,7 @@
 import typer
 from rich.console import Console
 from rich.table import Table
+from rich.prompt import Confirm
 from enum import Enum
 
 from models.tag_model import Tag
@@ -29,9 +30,11 @@ def add(name: str, color: ColorsTag = ColorsTag.white):
 
 @app.command(short_help='Remove an tag')
 def rm(key: int):
-    with console.status(f'[red]:wastebasket: Removing [bold]tag {key}[/]...[/]'):
-        delete(key=key)
-        show()
+    confirm = Confirm.ask(f'[red]:warning: Do you want to remove tag [bold]{key}[/] :question:[/]')
+    if confirm:
+        with console.status(f'[red]:wastebasket: Removing [bold]tag {key}[/]...[/]'):
+            delete(key=key)
+            show()
 
 
 @app.command(short_help='Update an tag')
