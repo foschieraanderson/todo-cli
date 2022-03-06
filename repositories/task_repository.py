@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 from configs.database import conn, cursor
 from models.task_model import Task
 
@@ -17,7 +18,7 @@ create_table_task()
 
 def create(task: Task):
     with conn:
-        conn.execute('INSERT INTO tasks VALUES (NULL, :title,:description, :tag, :done, :created_at,:completed_at)', {
+        cursor.execute('INSERT INTO tasks VALUES (NULL, :title, :description, :tag, :done, :created_at, :completed_at)', {
             'title': task.title,
             'description': task.description,
             'tag': task.tag,
@@ -29,7 +30,7 @@ def create(task: Task):
 def complete(key: int, done: bool):
     completed = datetime.now() if done else None
     with conn:
-        conn.execute('UPDATE tasks SET done = :done, completed_at = :completed  WHERE id = :key', {
+        cursor.execute('UPDATE tasks SET done = :done, completed_at = :completed  WHERE id = :key', {
             'key': key, 'done': done, 'completed': completed
         })
 
@@ -39,5 +40,14 @@ def delete(key: int):
 
 def clear_all():
     with conn:
-        conn.execute('DROP TABLE tasks')
+        cursor.execute('DROP TABLE tasks')
         create_table_task()
+
+def list_all() -> List[Task]:
+    with conn:
+        cursor.execute('SELECT * FROM tasks ORDER BY created_at DESC')
+        results = cursor.fetchall()
+
+        tasks = [Task(*result) for result in results]
+
+        return tasks

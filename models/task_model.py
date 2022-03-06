@@ -9,5 +9,5 @@ class Task():
     description: Optional[str]
     tag: Optional[str]
     done: bool = field(default=False)
-    completed_at: Optional[datetime] = field(init=False, default=None)
     created_at: datetime = field(default=datetime.now())
+    completed_at: Optional[datetime] = field(default=None)
