@@ -2,14 +2,14 @@ from typing import List, Optional
 from configs.database import conn, cursor
 from models.tag_model import Tag
 
-def create_table():
+def create_table_tag():
     cursor.execute("""CREATE TABLE IF NOT EXISTS tags (
         id integer primary key autoincrement,
         name text not null unique,
         color text not null 
         )""")
 
-create_table()
+create_table_tag()
 
 def create(tag: Tag):
     with conn:
@@ -39,7 +39,7 @@ def update(key: int, name: str, color: str):
 def clear_all():
     with conn:
         cursor.execute('DROP TABLE tags')
-        create_table()
+        create_table_tag()
 
 def list_all() -> List[Tag]:
     cursor.execute('SELECT * FROM tags')
