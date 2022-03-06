@@ -24,3 +24,9 @@ def create(task: Task):
             'created_at': task.created_at,
             'completed_at': task.completed_at
         })
+
+def complete(key: int, done: bool):
+    with conn:
+        conn.execute('UPDATE tasks SET done = :done WHERE id = :key', {
+            'key': key, 'done': done
+        })
