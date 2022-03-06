@@ -36,3 +36,8 @@ def complete(key: int, done: bool):
 def delete(key: int):
     with conn:
         conn.execute('DELETE FROM tasks WHERE id = :key', {'key': key})
+
+def clear_all():
+    with conn:
+        conn.execute('DROP TABLE tasks')
+        create_table_task()

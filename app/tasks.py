@@ -1,6 +1,6 @@
 from enum import Enum
 from models.task_model import Task
-from repositories.task_repository import complete, create, delete
+from repositories.task_repository import clear_all, complete, create, delete
 import typer
 from rich.console import Console
 
@@ -22,3 +22,7 @@ def done(key: int, done: bool = True):
 def rm(key: int):
     delete(key=key)
     console.print('KEY: ', key)
+
+@app.command(short_help='Remove all tasks')
+def clear():
+    clear_all()
