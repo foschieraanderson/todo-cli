@@ -3,6 +3,7 @@ from models.task_model import Task
 from repositories.task_repository import clear_all, complete, create, delete, list_all
 import typer
 from rich.console import Console
+from rich.prompt import Confirm
 
 console = Console()
 app = typer.Typer()
@@ -20,12 +21,16 @@ def done(key: int, done: bool = True):
 
 @app.command(short_help='Remove an task')
 def rm(key: int):
-    delete(key=key)
-    console.print('KEY: ', key)
+    confirm = Confirm.ask(f'[red] :warning: Do you want to remove task [bold]{key}[/] :question:[/]')
+    if confirm:
+        delete(key=key)
+        console.print('KEY: ', key)
 
 @app.command(short_help='Remove all tasks')
 def clear():
-    clear_all()
+    confirm = Confirm.ask(f'[white on red] :warning: Do you want to remove [bold]all[/] tasks :question:[/]')
+    if confirm:
+        clear_all()
 
 @app.command(short_help='List all tasks')
 def show():
