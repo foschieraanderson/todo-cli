@@ -7,6 +7,7 @@ import typer
 from rich.console import Console
 from rich.prompt import Confirm
 from rich.table import Table
+from rich.padding import Padding
 
 console = Console()
 app = typer.Typer()
@@ -45,14 +46,20 @@ def show():
     table = Table(title='My Tasks', title_justify='center', show_header=True, header_style='bold blue')
     table.add_column('#', style='dim')
     table.add_column('Title', min_width=20, justify='left')
-    table.add_column('Tag', min_width=15, justify='left')
-    table.add_column('Created', justify='left')
-    table.add_column('Completed', justify='left')
+    table.add_column('Tag', justify='center')
+    table.add_column('Created', justify='center')
+    table.add_column('Completed', justify='center')
     table.add_column('Done', justify='center')
 
+    colors = {tag.name: tag.color for tag in all_tags() if tag}
+
     for task in tasks:
-        done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
+        pk = f'{task.id}'
+        title = f'[strike]{task.title}[/]' if task.done else task.title
+        tag = Padding(f'{task.tag}', (0,1), style=f'black on {colors[task.tag]}', expand=True)
         created = datetime.fromisoformat(task.created_at).strftime('%d/%m/%Y')
-        completed = datetime.fromisoformat(task.completed_at).strftime('%d/%m/%Y') if task.completed_at else None
-        table.add_row(str(task.id), task.title, task.tag, created, completed, done)
+        completed = datetime.fromisoformat(task.completed_at).strftime('%d/%m/%Y') if task.done else '-----'
+        done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
+
+        table.add_row(pk, title, tag, created, completed, done)
     console.print(table)
