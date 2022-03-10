@@ -1,6 +1,7 @@
 from enum import Enum
 from datetime import datetime 
 from models.task_model import Task
+from repositories.tag_repository import list_all as all_tags
 from repositories.task_repository import clear_all, complete, create, delete, list_all
 import typer
 from rich.console import Console
@@ -10,9 +11,12 @@ from rich.table import Table
 console = Console()
 app = typer.Typer()
 
+tag_options = {tag.name: tag.name for tag in all_tags()}
+tags = Enum('Tags', tag_options)
+
 @app.command(short_help='Add an task')
-def add(title: str, description: str = '', tag: str = ''):
-    task = Task(id=None, title=title, description=description, tag=tag)
+def add(title: str, description: str = '', tag: tags = None):
+    task = Task(id=None, title=title, description=description, tag=tag.value)
     create(task)
     show()
 
