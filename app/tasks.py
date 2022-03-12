@@ -18,7 +18,8 @@ tags = Enum('Tags', tag_options)
 @app.command(short_help='Add an task')
 def add(title: str, description: str = '', tag: tags = None):
     try:
-        task = Task(id=None, title=title, description=description, tag=tag.value)
+        tag_value = tag.value if tag else ''
+        task = Task(id=None, title=title, description=description, tag=tag_value)
         create(task)
         show()
     except Exception:
@@ -64,12 +65,17 @@ def show():
         table.add_column('Completed', justify='center')
         table.add_column('Done', justify='center')
 
-        colors = {tag.name: tag.color for tag in all_tags() if tag}
+        colors = {tag.name: tag.color for tag in all_tags()}
 
         for task in tasks:
             pk = f'{task.id}'
             title = f'[strike]{task.title}[/]' if task.done else task.title
-            tag = Padding(f'{task.tag}', (0,1), style=f'black on {colors[task.tag]}', expand=True)
+            tag = Padding(
+                f'{task.tag}',
+                (0,1),
+                style=f'black on {colors[task.tag]}',
+                expand=True
+            ) if task.tag else '-----'
             created = date_format(task.created_at)
             completed = date_format(task.completed_at) if task.done else '-----'
             done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
