@@ -1,5 +1,5 @@
 from enum import Enum
-from datetime import datetime 
+from utils.helpers import date_format
 from models.task_model import Task
 from repositories.tag_repository import list_all as all_tags
 from repositories.task_repository import clear_all, complete, create, delete, list_all
@@ -70,8 +70,8 @@ def show():
             pk = f'{task.id}'
             title = f'[strike]{task.title}[/]' if task.done else task.title
             tag = Padding(f'{task.tag}', (0,1), style=f'black on {colors[task.tag]}', expand=True)
-            created = datetime.fromisoformat(task.created_at).strftime('%d/%m/%Y')
-            completed = datetime.fromisoformat(task.completed_at).strftime('%d/%m/%Y') if task.done else '-----'
+            created = date_format(task.created_at)
+            completed = date_format(task.completed_at) if task.done else '-----'
             done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
 
             table.add_row(pk, title, tag, created, completed, done)
