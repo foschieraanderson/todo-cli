@@ -30,6 +30,7 @@ def up(key: int, title: str = None, description: str = '', tag: tags = None):
     try:
         tag_value = tag.value if tag else ''
         update(key=key, title=title, description=description, tag=tag_value)
+        show()
     except Exception:
         console.print_exception(show_locals=True)
 

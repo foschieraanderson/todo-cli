@@ -30,8 +30,7 @@ def create(task: Task):
 def update(key: int, **kwargs):
     with conn:
         args = {key: value for (key, value) in kwargs.items() if value }
-        count = 1
-        values = ''
+        count, values = 1, ''
         for arg in args.keys():
             values += f'{arg} = :{arg}, ' if count < len(args.keys()) else f'{arg} = :{arg}'
             count += 1
