@@ -27,6 +27,18 @@ def create(task: Task):
             'completed_at': task.completed_at
         })
 
+def update(key: int, **kwargs):
+    with conn:
+        args = {key: value for (key, value) in kwargs.items() if value }
+        count = 1
+        values = ''
+        for arg in args.keys():
+            values += f'{arg} = :{arg}, ' if count < len(args.keys()) else f'{arg} = :{arg}'
+            count += 1
+        query = f'UPDATE tasks SET {values} WHERE id = :key'
+        args.update({'key': key})
+        cursor.execute(query, args)
+
 def complete(key: int, done: bool):
     completed = datetime.now() if done else None
     with conn:

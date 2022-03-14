@@ -2,7 +2,7 @@ from enum import Enum
 from utils.helpers import date_format
 from models.task_model import Task
 from repositories.tag_repository import list_all as all_tags
-from repositories.task_repository import clear_all, complete, create, delete, list_all
+from repositories.task_repository import clear_all, complete, create, delete, list_all, update
 import typer
 from rich.console import Console
 from rich.prompt import Confirm
@@ -22,6 +22,14 @@ def add(title: str, description: str = '', tag: tags = None):
         task = Task(id=None, title=title, description=description, tag=tag_value)
         create(task)
         show()
+    except Exception:
+        console.print_exception(show_locals=True)
+
+@app.command(short_help='Update an task')
+def up(key: int, title: str = None, description: str = '', tag: tags = None):
+    try:
+        tag_value = tag.value if tag else ''
+        update(key=key, title=title, description=description, tag=tag_value)
     except Exception:
         console.print_exception(show_locals=True)
 
