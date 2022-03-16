@@ -90,6 +90,7 @@ def show():
             done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
 
             table.add_row(pk, title, tag, created, completed, done)
+        console.clear()
         console.print(table)
     except Exception:
         console.print_exception(show_locals=True)
