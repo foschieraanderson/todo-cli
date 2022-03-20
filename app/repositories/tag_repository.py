@@ -1,6 +1,6 @@
 from typing import List, Optional
 from configs.database import conn, cursor
-from models.tag_model import Tag
+from app.models.tag_model import Tag
 
 def create_table_tag():
     cursor.execute("""CREATE TABLE IF NOT EXISTS tags (

@@ -1,9 +1,9 @@
 from time import sleep
 from enum import Enum
-from utils.helpers import date_format
-from models.task_model import Task
-from repositories.tag_repository import list_all as all_tags
-from repositories.task_repository import clear_all, complete, create, delete, list_all, update
+from app.utils.helpers import date_format
+from app.models.task_model import Task
+from app.repositories.tag_repository import list_all as all_tags
+from app.repositories.task_repository import clear_all, complete, create, delete, list_all, update
 import typer
 from rich.console import Console
 from rich.prompt import Confirm
