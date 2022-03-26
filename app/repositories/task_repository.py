@@ -1,23 +1,24 @@
 from datetime import datetime
 from typing import List
-from configs.database import conn, cursor
+from configs.database import connection
 from app.models.task_model import Task
 
 def create_table_task():
-    cursor.execute('''CREATE TABLE IF NOT EXISTS tasks (
-        id integer primary key autoincrement,
-        title text not null,
-        description text,
-        tag text,
-        done boolean,
-        created_at datetime,
-        completed_at datetime
-    )''')
+    with connection() as cursor:
+        cursor.execute('''CREATE TABLE IF NOT EXISTS tasks (
+            id integer primary key autoincrement,
+            title text not null,
+            description text,
+            tag text,
+            done boolean,
+            created_at datetime,
+            completed_at datetime
+        )''')
 
 create_table_task()
 
 def create(task: Task):
-    with conn:
+    with connection() as cursor:
         cursor.execute('INSERT INTO tasks VALUES (NULL, :title, :description, :tag, :done, :created_at, :completed_at)', {
             'title': task.title,
             'description': task.description,
@@ -28,7 +29,7 @@ def create(task: Task):
         })
 
 def update(key: int, **kwargs):
-    with conn:
+    with connection() as cursor:
         args = {key: value for (key, value) in kwargs.items() if value }
         count, values = 1, ''
         for arg in args.keys():
@@ -40,24 +41,24 @@ def update(key: int, **kwargs):
 
 def complete(key: int, done: bool):
     completed = datetime.now() if done else None
-    with conn:
+    with connection() as cursor:
         cursor.execute('UPDATE tasks SET done = :done, completed_at = :completed  WHERE id = :key', {
             'key': key, 'done': done, 'completed': completed
         })
 
 def delete(key: int):
-    with conn:
-        conn.execute('DELETE FROM tasks WHERE id = :key', {'key': key})
+    with connection() as cursor:
+        cursor.execute('DELETE FROM tasks WHERE id = :key', {'key': key})
 
 def clear_all():
-    with conn:
+    with connection() as cursor:
         cursor.execute('DROP TABLE tasks')
         create_table_task()
 
 def list_all() -> List[Task]:
-    with conn:
-        cursor.execute('SELECT * FROM tasks ORDER BY created_at DESC')
-        results = cursor.fetchall()
+    with connection() as cursor:
+        query = cursor.execute('SELECT * FROM tasks ORDER BY created_at DESC')
+        results = query.fetchall()
 
         tasks = [Task(*result) for result in results]
 
