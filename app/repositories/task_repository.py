@@ -63,3 +63,11 @@ def list_all() -> List[Task]:
         tasks = [Task(*result) for result in results]
 
         return tasks
+
+def list_one(key: int) -> Task:
+    with connection() as cursor:
+        query = cursor.execute('SELECT * FROM tasks WHERE id = :key', {'key': key})
+        result =  query.fetchone()
+        task = Task(*result)
+
+        return task
