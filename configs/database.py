@@ -1,25 +1,23 @@
 import sqlite3
+from contextlib import contextmanager
  
+@contextmanager
 def connection():
     try:
         
-        # Connect to DB and create a cursor
-        conn = sqlite3.connect('sql.db')
-        cursor = conn.cursor()
-        # print('DB Init')
-      
-        return cursor
-        # Close the cursor
-        # cursor.close()
+        # Connect to DB and generate a cursor
+        conn = sqlite3.connect('database.db')
+        conn.row_factory = sqlite3.Row # fetchall returns dicts
+        yield conn.cursor()
       
     # Handle errors
     except sqlite3.Error as error:
-        print('Error occured - ', error)
+        conn.rollback()
+        raise Exception(f'Error occured - {error}')
       
     # Close DB Connection irrespective of success
     # or failure
-    # finally:
+    finally:
+        conn.commit()
+        conn.close()
         
-    #     if conn:
-    #         conn.close()
-    #         print('SQLite Connection closed')
