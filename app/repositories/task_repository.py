@@ -4,6 +4,7 @@ from configs.database import connection
 from app.models.task_model import Task
 
 def create_table_task():
+    """Create table taks if not exists"""
     with connection() as cursor:
         cursor.execute('''CREATE TABLE IF NOT EXISTS tasks (
             id integer primary key autoincrement,
@@ -18,6 +19,7 @@ def create_table_task():
 create_table_task()
 
 def create(task: Task):
+    """Add a task"""
     with connection() as cursor:
         cursor.execute('INSERT INTO tasks VALUES (NULL, :title, :description, :tag, :done, :created_at, :completed_at)', {
             'title': task.title,
@@ -29,6 +31,7 @@ def create(task: Task):
         })
 
 def update(key: int, **kwargs):
+    """Update a task"""
     with connection() as cursor:
         args = {key: value for (key, value) in kwargs.items() if value }
         count, values = 1, ''
@@ -40,6 +43,7 @@ def update(key: int, **kwargs):
         cursor.execute(query, args)
 
 def complete(key: int, done: bool):
+    """Set a task to complete"""
     completed = datetime.now() if done else None
     with connection() as cursor:
         cursor.execute('UPDATE tasks SET done = :done, completed_at = :completed  WHERE id = :key', {
@@ -47,15 +51,18 @@ def complete(key: int, done: bool):
         })
 
 def delete(key: int):
+    """Delete a task"""
     with connection() as cursor:
         cursor.execute('DELETE FROM tasks WHERE id = :key', {'key': key})
 
 def clear_all():
+    """Delete all tasks"""
     with connection() as cursor:
         cursor.execute('DROP TABLE tasks')
         create_table_task()
 
 def list_all() -> List[Task]:
+    """List all tasks"""
     with connection() as cursor:
         query = cursor.execute('SELECT * FROM tasks ORDER BY created_at DESC')
         results = query.fetchall()
@@ -65,6 +72,7 @@ def list_all() -> List[Task]:
         return tasks
 
 def list_one(key: int) -> Task:
+    """List a task"""
     with connection() as cursor:
         query = cursor.execute('SELECT * FROM tasks WHERE id = :key', {'key': key})
         result =  query.fetchone()
