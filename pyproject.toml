@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "todo-cli"
+version = "0.1.0"
+description = "Todo app for CLI"
+authors = ["Anderson Foschiera <foschieraanderson@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "todo_cli"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = {extras = ["all"], version = "^0.6.1"}
+rich = "^12.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
