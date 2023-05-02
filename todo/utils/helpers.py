@@ -8,8 +8,8 @@ from rich.console import Console
 from rich.table import Table
 from rich.padding import Padding
 
-from app.repositories.tag_repository import list_all as all_tags
-from app.models.task_model import Task
+from todo.repositories.tag_repository import list_all as all_tags
+from todo.models.task_model import Task
 
 console = Console()
 
@@ -50,7 +50,7 @@ def show_table_tasks(tasks: List[Task]) -> None:
             ) if task.tag else '-----'
             created = date_format(task.created_at)
             completed = date_format(task.completed_at) if task.done else '-----'
-            done = '[green]✅[/]' if task.done else '[red]:negative_squared_cross_mark:[/]'
+            done = '[green]:heavy_check_mark:[/]' if task.done else '[red]:heavy_multiplication_x:[/]'
 
             table.add_row(pk, title, tag, created, completed, done)
         console.clear()

@@ -1,7 +1,7 @@
 import typer
 from typing import Optional
-from app import __app_name__, __version__
-from app.src import tasks, tags
+from todo import __app_name__, __version__
+from todo.src import tasks, tags
 
 app = typer.Typer()
 

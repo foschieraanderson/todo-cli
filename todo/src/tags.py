@@ -4,8 +4,8 @@ from rich.table import Table
 from rich.prompt import Confirm
 from enum import Enum
 
-from app.models.tag_model import Tag
-from app.repositories.tag_repository import clear_all, create, delete, list_all, update
+from todo.models.tag_model import Tag
+from todo.repositories.tag_repository import clear_all, create, delete, list_all, update
 
 from time import sleep
 

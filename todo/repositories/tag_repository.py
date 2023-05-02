@@ -1,6 +1,6 @@
 from typing import List, Optional
 from configs.database import connection
-from app.models.tag_model import Tag
+from todo.models.tag_model import Tag
 
 def create_table_tag():
     """Create table tags if not exists"""

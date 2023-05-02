@@ -1,10 +1,11 @@
 from typing import Optional
-from app.models.task_model import Task
-from app.repositories.task_repository import clear_all, complete, create, delete, list_all, list_one, update
-from app.utils.helpers import get_tags, show_table_tasks
 import typer
 from rich.console import Console
 from rich.prompt import Confirm
+
+from todo.models.task_model import Task
+from todo.repositories.task_repository import clear_all, complete, create, delete, list_all, list_one, update
+from todo.utils.helpers import get_tags, show_table_tasks
 
 console = Console()
 app = typer.Typer()

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 from configs.database import connection
-from app.models.task_model import Task
+from todo.models.task_model import Task
 
 def create_table_task():
     """Create table taks if not exists"""
