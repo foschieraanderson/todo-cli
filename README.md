@@ -54,7 +54,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando comandos disponíveis
 
     ```sh
-      $ python -m app --help
+      $ python -m todo --help
     ```
 
   ![Comandos](assets/screenshot-1.png)
@@ -62,7 +62,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando comandos disponíveis para **tasks**
 
     ```sh
-      $ python -m app tasks --help
+      $ python -m todo tasks --help
     ```
 
   ![Comandos](assets/screenshot-2.png)
@@ -70,7 +70,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando comandos disponíveis para **tags**
 
     ```sh
-      $ python -m app tags --help
+      $ python -m todo tags --help
     ```
 
   ![Comandos](assets/screenshot-3.png)
@@ -78,7 +78,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando argumentos necessários para adicionar uma **task**
 
     ```sh
-      $ python -m app tasks add --help
+      $ python -m todo tasks add --help
     ```
 
   ![Comandos](assets/screenshot-4.png)
@@ -86,7 +86,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando argumentos necessários para adicionar uma **tag**
 
     ```sh
-      $ python -m app tags add --help
+      $ python -m todo tags add --help
     ```
 
   ![Comandos](assets/screenshot-5.png)
@@ -94,7 +94,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   - Verificando argumentos necessários para completar uma **task**
 
     ```sh
-      $ python -m app tasks done --help
+      $ python -m todo tasks done --help
     ```
 
   ![Comandos](assets/screenshot-6.png)
