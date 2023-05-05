@@ -6,6 +6,7 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
 <details open="open">
   <summary><strong>TABLE OF CONTENTS</strong></summary>
   <ul>
+    <li><a href="#screenshot">Screenshots</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -18,6 +19,15 @@ Aplicação para gerenciar tarefas pela linha de comando escrito em python.
   </ul>
 </details>
 
+## Screenshots
+
+| Tasks |
+|----------------------|
+|![TASKS](assets/tasks.png)|
+
+| Tags |
+|---------|
+|![TAGS](assets/tags.png)|
 
 ## Getting Started
 
