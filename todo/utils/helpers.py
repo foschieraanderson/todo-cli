@@ -3,7 +3,6 @@ from enum import Enum
 from datetime import datetime
 from typing import List
 
-import typer
 from rich.console import Console
 from rich.table import Table
 from rich.padding import Padding
